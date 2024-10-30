@@ -1,0 +1,8 @@
+::ELK KQL Filter Syntax::
+
+(log_type: "system" AND (message: "failed login" OR message: "unauthorized access" OR message: "permission denied")) OR
+(log_type: "service" AND service.name: ("ssh" OR "rdp") AND (message: "authentication failure" OR message: "connection refused")) OR
+(log_type: "web" AND (http.response.status_code >= 400 OR url.path: ("/admin" OR "/login")) AND (message: "SQL injection attempt" OR message: "access denied")) OR
+(log_type: "database" AND (event.action: "failed login" OR message: "unauthorized query")) OR
+(log_type: "network" AND (event.action: "blocked connection" OR network.traffic: "unusual pattern" OR network.protocol: ("telnet" OR "ftp") AND message: "denied"))
+
