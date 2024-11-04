@@ -1,0 +1,5 @@
+
+## Finding process related information and keyword search to that event ##
+  Get-WinEvent -Path .\sysmon.evtx -FilterXPath /System/EventID=13 | Sort-Object TimeCreated | Where-Object {$_.Message -like  "*enc*"} | fl
+
+## 
