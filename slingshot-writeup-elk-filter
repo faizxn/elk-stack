@@ -1,0 +1,59 @@
+
+@What was the attacker’s IP?
+transaction.remote_address
+
+
+@What is the flag under the interesting directory the attacker found?
+transaction.remote_address : "10.0.2.15" and response.status : 200 and request.headers.User-Agent : "Mozilla/5.0 (Gobuster)"
+
+
+@What login page did the attacker discover using the directory enumeration tool?
+transaction.remote_address : "10.0.2.15" and NOT (response.status : 404) and request.headers.User-Agent : "Mozilla/5.0 (Gobuster)"
+/admin-login.php
+
+
+@What was the user agent of the brute-force tool that the attacker used on the admin panel?
+transaction.remote_address : "10.0.2.15" and NOT (response.status : 404) and http.url : "/admin-login.php"
+Mozilla/4.0 (Hydra)
+
+
+@What username:password combination did the attacker use to gain access to the admin page?
+transaction.remote_address : "10.0.2.15" and response.status : 200 and http.url : "/admin-login.php"
+
+request.headers.authorization : YWRtaW46dGh4MTEzOA==   
+admin:thx1138				base64-decode
+
+
+@What flag was included in the file that the attacker uploaded from the admin directory?
+transaction.remote_address : "10.0.2.15" and http.url : /admin/* and NOT (http.method : GET)
+
+	||to see what the attacker uploaded.. I looked at the details of the request..
+THM{ecb012e53a58818cbd17a924769ec447}
+
+
+@What was the first command the attacker ran on the web shell?
+transaction.remote_address : "10.0.2.15" and http.url : *easy-simple-php-webshell.php*
+whoami
+
+@What file location on the web server did the attacker extract database credentials from using Local File Inclusion?
+transaction.remote_address : "10.0.2.15" and http.url : *easy-simple-php-webshell.php*
+
+
+@What file location on the web server did the attacker extract database credentials from using Local File Inclusion?
+transaction.remote_address : "10.0.2.15" and http.url : */admin/*
+/etc/phpmyadmin/config-db.php
+
+
+@What directory did the attacker use to access the database manager?
+transaction.remote_address : "10.0.2.15" and http.url : /phpmyadmin/*export*
+customer_credit_cards
+
+
+@What flag does the attacker insert into the database?
+transaction.remote_address : "10.0.2.15" and http.url : /phpmyadmin/* and NOT (http.method : GET)
+
+
+
+
+
+
