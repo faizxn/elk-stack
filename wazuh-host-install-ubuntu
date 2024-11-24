@@ -1,0 +1,58 @@
+
+$$ After installing ubuntu 24.04 LTS, and update necessary following below steps:
+
+curl -sO https://packages.wazuh.com/4.9/wazuh-install.sh
+curl -sO https://packages.wazuh.com/4.9/config.yml
+
+# ls
+config.yml  snap  wazuh-install.sh
+
+root@ubuntu64-wazuh:~# cat config.yml    ->  set indexer, server and dashboard to 127.0.01
+nodes:
+  # Wazuh indexer nodes
+  indexer:
+    - name: node-1
+      ip: "<indexer-node-ip>"
+    #- name: node-2
+    #  ip: "<indexer-node-ip>"
+    #- name: node-3
+    #  ip: "<indexer-node-ip>"
+
+  # Wazuh server nodes
+  # If there is more than one Wazuh server
+  # node, each one must have a node_type
+  server:
+    - name: wazuh-1
+      ip: "<wazuh-manager-ip>"
+    #  node_type: master
+    #- name: wazuh-2
+    #  ip: "<wazuh-manager-ip>"
+    #  node_type: worker
+    #- name: wazuh-3
+    #  ip: "<wazuh-manager-ip>"
+    #  node_type: worker
+
+  # Wazuh dashboard nodes
+  dashboard:
+    - name: dashboard
+      ip: "<dashboard-nbash">
+	  
+	  
+# bash wazuh-install.sh --generate-config-files
+or
+# bash wazuh-install.sh -g
+24/11/2024 15:53:01 INFO: Starting Wazuh installation assistant. Wazuh version: 4.9.2
+24/11/2024 15:53:01 INFO: Verbose logging redirected to /var/log/wazuh-install.log
+24/11/2024 15:53:05 INFO: Verifying that your system meets the recommended minimum hardware requirements.
+24/11/2024 15:53:05 INFO: --- Configuration files ---
+24/11/2024 15:53:05 INFO: Generating configuration files.
+24/11/2024 15:53:05 INFO: Generating the root certificate.
+24/11/2024 15:53:05 INFO: Generating Admin certificates.
+24/11/2024 15:53:05 INFO: Generating Wazuh indexer certificates.
+24/11/2024 15:53:06 INFO: Generating Filebeat certificates.
+24/11/2024 15:53:06 INFO: Generating Wazuh dashboard certificates.
+24/11/2024 15:53:06 INFO: Created wazuh-install-files.tar. It contains the Wazuh cluster key, certificates, and passwords necessary for installation.
+
+# ls
+
+# bash wazuh-install.sh -a -o -i
